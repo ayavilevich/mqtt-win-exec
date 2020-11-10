@@ -1,4 +1,5 @@
-# An agent to execute commands in response to mqtt messages and publish result of command executions
+# mqtt-win-exec
+An agent to execute commands in response to mqtt messages and publish result of command executions
 
 ## TODO
 
