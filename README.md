@@ -16,3 +16,4 @@ https://gitlab.com/iotlink/iotlink
 https://github.com/denschu/mqtt-exec  
 https://github.com/msiedlarek/winthing  
 https://github.com/jpmens/mqtt-launcher  
+https://github.com/rainu/mqtt-executor  

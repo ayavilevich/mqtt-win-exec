@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // load config
 const dotenv = require('dotenv');
 
@@ -22,16 +23,16 @@ console.log(topics);
 // connect to mqtt broker
 const mqttClient = mqtt.connect(process.env.MQTT_BROKER_URL);
 
-mqttClient.on('connect', function () {
+mqttClient.on('connect', () => {
 	const subTopics = ['test'];
-	console.info("Subscribe to topics...: " + subTopics);
+	console.info(`Subscribe to topics...: ${subTopics}`);
 	mqttClient.subscribe(subTopics);
-	mqttClient.on('message', function (topic, message) {
+	mqttClient.on('message', (topic, message) => {
 		console.log(topic);
 		console.log(message, message.toString());
 	});
 });
 
-mqttClient.on('error', function (error) {
+mqttClient.on('error', (error) => {
 	console.error('MQTT error', error);
 });
