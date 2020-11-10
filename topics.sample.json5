@@ -1,0 +1,28 @@
+{
+	subscribe: {
+		'win/test-pc/notify': 'powershell script.ps1 test!',
+		'win/test-pc/notify2': {
+			method: 'execFile',
+			command: 'powershell',
+			args: ['script.ps1 PC!']
+		},
+	},
+	publish: {
+		'win/test-pc/dir': {
+			command: 'cmd /c dir',
+			interval: 20,
+		},
+		'win/test-pc/dir1': {
+			command: 'dir',
+			interval: 25,
+		},
+		'win/test-pc/dir2': {
+			command: {
+				method: 'execFile',
+				command: 'cmd',
+				args: ['/c', 'echo', 'good'],
+			},
+			interval: 10,
+		},
+	},
+}
