@@ -206,3 +206,11 @@ mqttClient.on('disconnect', () => {
 mqttClient.on('offline', () => {
 	logger.warn('MQTT offline');
 });
+
+mqttClient.on('close', () => {
+	logger.warn('MQTT close');
+});
+
+mqttClient.on('end', () => {
+	logger.warn('MQTT end');
+});
