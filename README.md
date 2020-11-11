@@ -1,5 +1,11 @@
 # mqtt-win-exec
-An agent to execute commands in response to mqtt messages and publish result of command executions
+An agent to execute commands in response to mqtt messages and publish result of command executions.
+
+One example of use would be in a home automation scenario. You can install this tool on a Windows or linux machine and then control it centrally from Home Assistant or a similar software. You would also require a MQTT broker.
+
+This tool only executes pre-defined set of commands. This is by design due to security considerations.
+
+This was developed with Windows in mind as linux machines have more options from the get-go but it should run on any platform that is supported by nodejs. You would need to define proper command for your OS, of course.
 
 ## Installation instructions
 
@@ -29,6 +35,49 @@ This will run the Windows 'net' command several times as an Administrator to add
 ## TODO
 
 None at this time
+
+## Some useful powershell scripts that you can use with this executor
+
+updates.ps1
+
+```
+$u = New-Object -ComObject Microsoft.Update.Session
+$u.ClientApplicationID = 'MSDN Sample Script'
+$s = $u.CreateUpdateSearcher()
+$r = $s.Search("IsInstalled=0 and Type='Software' and IsHidden=0")
+#$r = $s.Search('IsInstalled=0')
+$r.updates|Select-Object -ExpandProperty Title
+```
+
+notification.ps1
+
+```
+param (
+	[string]$notificationTitle = "Notification: " + [DateTime]::Now.ToShortTimeString()
+)
+
+$ErrorActionPreference = "Stop"
+
+[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] > $null
+$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01)
+
+#Convert to .NET type for XML manipuration
+$toastXml = [xml] $template.GetXml()
+$toastXml.GetElementsByTagName("text").AppendChild($toastXml.CreateTextNode($notificationTitle)) > $null
+
+#Convert back to WinRT type
+$xml = New-Object Windows.Data.Xml.Dom.XmlDocument
+$xml.LoadXml($toastXml.OuterXml)
+
+$toast = [Windows.UI.Notifications.ToastNotification]::new($xml)
+$toast.Tag = "PowerShell"
+$toast.Group = "PowerShell"
+$toast.ExpirationTime = [DateTimeOffset]::Now.AddSeconds(5)
+#$toast.SuppressPopup = $true
+
+$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("PowerShell")
+$notifier.Show($toast);
+```
 
 ## Credits
 

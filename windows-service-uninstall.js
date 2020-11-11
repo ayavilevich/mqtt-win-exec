@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { Service } = require('node-windows');
 const path = require('path');
 
