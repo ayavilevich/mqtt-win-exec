@@ -136,6 +136,12 @@ function executeTopic(topic, inCommand, callback = executeTopicCallback) {
 	}
 }
 
+function publishCallback(error) {
+	if (error) {
+		logger.warn('Error publishing', error);
+	}
+}
+
 function publishTopic(topic, command, mqttPublishOptions) {
 	logger.info('publish', topic);
 	executeTopic(topic, command, (error, stdout, stderr) => {
@@ -143,9 +149,9 @@ function publishTopic(topic, command, mqttPublishOptions) {
 		if (error) {
 			logger.error('Execute topic error:', error);
 		}
-		mqttClient.publish(topic, stdout, mqttPublishOptions);
+		mqttClient.publish(topic, stdout, mqttPublishOptions, publishCallback);
 		if (stderr) {
-			mqttClient.publish(`${topic}/error`, stderr, mqttPublishOptions);
+			mqttClient.publish(`${topic}/error`, stderr, mqttPublishOptions, publishCallback);
 		}
 	});
 }
@@ -163,7 +169,8 @@ mqttClient.on('connect', () => {
 	});
 	// publish start topic
 	if (topics.startTopic) {
-		mqttClient.publish(topics.startTopic.topic, topics.startTopic.payload, topics.startTopic.mqttPublishOptions);
+		logger.info('publish', topics.startTopic.topic);
+		mqttClient.publish(topics.startTopic.topic, topics.startTopic.payload, topics.startTopic.mqttPublishOptions, publishCallback);
 	}
 	// create intervals for sending
 	const pubTopics = Object.keys(topics.publish);
