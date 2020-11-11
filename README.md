@@ -36,6 +36,21 @@ This will run the Windows 'net' command several times as an Administrator to add
 
 None at this time
 
+## Troubleshooting
+
+MQTT can be debugged per https://github.com/mqttjs/MQTT.js/blob/master/README.md#debug-logs , by setting the 'DEBUG' env var to 'mqttjs*'. Debug output then goes to .\daemon\mqttwinexec.err.log .
+
+This can be set on a service by adding:
+
+```
+	env: [{
+		name: "DEBUG",
+		value: "mqttjs*",
+	}],
+```
+
+to the windows-service-install.js script, then uninstalling and re-installing the service.
+
 ## Some useful powershell scripts that you can use with this executor
 
 updates.ps1

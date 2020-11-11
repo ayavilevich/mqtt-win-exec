@@ -76,6 +76,9 @@ expandTopicsInList(topics.publish);
 if (topics.mqttConnectOptions && topics.mqttConnectOptions.will && topics.mqttConnectOptions.will.topic) {
 	topics.mqttConnectOptions.will.topic = expandTopic(topics.mqttConnectOptions.will.topic);
 }
+if (topics.mqttConnectOptions && topics.mqttConnectOptions.clientId) { // 'clientId' is not really a 'topic', but uses the same process
+	topics.mqttConnectOptions.clientId = expandTopic(topics.mqttConnectOptions.clientId);
+}
 if (topics.startTopic && topics.startTopic.topic) {
 	topics.startTopic.topic = expandTopic(topics.startTopic.topic);
 }

@@ -1,10 +1,12 @@
 {
-	mqttConnectOptions: {
+	mqttConnectOptions: { // https://github.com/mqttjs/MQTT.js/blob/master/README.md#mqttclientstreambuilder-options
 		will: {
 			topic: 'win/${HOSTNAME}/lwt',
 			payload: 'OFF',
 			retain: true,
 		},
+		clientId: 'mqtt-win-exec-${HOSTNAME}', // if not set will be random each restart and might cause 'will' issues
+		keepalive: 10, // seconds
 	},
 	startTopic: {
 		topic: 'win/${HOSTNAME}/lwt',
@@ -28,7 +30,7 @@
 			mqttPublishOptions: {
 				retain: true,
 			},
-			intervalPeriod: 'PT1M',
+			intervalPeriod: 'PT1M', // https://momentjs.com/docs/#/durations/
 		},
 		'win/${HOSTNAME}/ver': {
 			command: 'ver',
