@@ -194,3 +194,15 @@ mqttClient.on('connect', () => {
 mqttClient.on('error', (error) => {
 	logger.error('MQTT error', error);
 });
+
+mqttClient.on('reconnect', () => {
+	logger.warn('MQTT reconnect');
+});
+
+mqttClient.on('disconnect', () => {
+	logger.warn('MQTT disconnect');
+});
+
+mqttClient.on('offline', () => {
+	logger.warn('MQTT offline');
+});
