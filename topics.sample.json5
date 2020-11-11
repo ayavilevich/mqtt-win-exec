@@ -1,28 +1,53 @@
 {
-	subscribe: {
-		'win/test-pc/notify': 'powershell script.ps1 test!',
-		'win/test-pc/notify2': {
-			method: 'execFile',
-			command: 'powershell',
-			args: ['script.ps1 PC!']
+	mqttConnectOptions: {
+		will: {
+			topic: 'win/${HOSTNAME}/lwt',
+			payload: 'OFF',
+			retain: true,
 		},
 	},
+	startTopic: {
+		topic: 'win/${HOSTNAME}/lwt',
+		payload: 'ON',
+		mqttPublishOptions: {
+			retain: true,
+		},
+	},
+	subscribe: {
+		'win/${HOSTNAME}/notify': 'powershell notify.ps1 test!',
+		'win/${HOSTNAME}/notify2': {
+			method: 'execFile',
+			command: 'powershell',
+			args: ['.\\notify.ps1 PC!']
+		},
+		'win/${HOSTNAME}/restart-service': 'powershell -command "Restart-Service SQLServer -Force"',
+	},
 	publish: {
-		'win/test-pc/dir': {
+		'win/${HOSTNAME}/dir': {
 			command: 'cmd /c dir',
-			interval: 20,
+			mqttPublishOptions: {
+				retain: true,
+			},
+			intervalPeriod: 'PT1M',
 		},
-		'win/test-pc/dir1': {
-			command: 'dir',
-			interval: 25,
+		'win/${HOSTNAME}/ver': {
+			command: 'ver',
+			mqttPublishOptions: {
+				retain: true,
+			},
+			intervalPeriod: 300,
 		},
-		'win/test-pc/dir2': {
+		'win/${HOSTNAME}/updates': {
 			command: {
 				method: 'execFile',
-				command: 'cmd',
-				args: ['/c', 'echo', 'good'],
+				command: 'powershell',
+				args: ['.\\updates.ps1'],
 			},
-			interval: 10,
+			mqttPublishOptions: {
+				retain: true,
+			},
+			intervalPeriod: '4:00:00',
+			runAtStart: false,
 		},
 	},
 }
