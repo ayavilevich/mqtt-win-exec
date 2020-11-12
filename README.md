@@ -38,7 +38,7 @@ None at this time
 
 ## Troubleshooting
 
-MQTT can be debugged per https://github.com/mqttjs/MQTT.js/blob/master/README.md#debug-logs , by setting the 'DEBUG' env var to 'mqttjs*'. Debug output then goes to .\daemon\mqttwinexec.err.log .
+MQTT can be debugged per https://github.com/mqttjs/MQTT.js/blob/master/README.md#debug-logs , by setting the 'DEBUG' env var to 'mqttjs*'.
 
 This can be set on a service by adding:
 
@@ -49,7 +49,7 @@ This can be set on a service by adding:
 	}],
 ```
 
-to the windows-service-install.js script, then uninstalling and re-installing the service.
+to the windows-service-install.js script, then uninstalling and re-installing the service. Debug output of the service then goes to .\daemon\mqttwinexec.err.log .
 
 ## Some useful powershell scripts that you can use with this executor
 

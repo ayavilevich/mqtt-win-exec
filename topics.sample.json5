@@ -43,7 +43,7 @@
 			command: {
 				method: 'execFile',
 				command: 'powershell',
-				args: ['.\\updates.ps1'],
+				args: ['-ExecutionPolicy', 'Bypass', '-File', '.\\updates.ps1'],
 			},
 			mqttPublishOptions: {
 				retain: true,
