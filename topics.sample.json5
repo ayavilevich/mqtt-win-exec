@@ -22,7 +22,12 @@
 			command: 'powershell',
 			args: ['.\\notify.ps1 PC!']
 		},
-		'win/${HOSTNAME}/restart-service': 'powershell -command "Restart-Service SQLServer -Force"',
+		'win/${HOSTNAME}/git_pull': 'git pull', // update self
+		'win/${HOSTNAME}/exit': { // will restart self if ran by a service daemon
+			method: 'exit',
+			code: 1,
+		},
+		'win/${HOSTNAME}/restart-some-service': 'powershell -command "Restart-Service SQLServer -Force"',
 	},
 	publish: {
 		'win/${HOSTNAME}/dir': {
@@ -38,6 +43,20 @@
 				retain: true,
 			},
 			intervalPeriod: 300,
+		},
+		'win/${HOSTNAME}/node_ver': {
+			command: 'node -v',
+			mqttPublishOptions: {
+				retain: true,
+			},
+			intervalPeriod: 600,
+		},
+		'win/${HOSTNAME}/git_ver': {
+			command: 'git version',
+			mqttPublishOptions: {
+				retain: true,
+			},
+			intervalPeriod: 600,
 		},
 		'win/${HOSTNAME}/updates': {
 			command: {

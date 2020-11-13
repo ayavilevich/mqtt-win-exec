@@ -32,6 +32,7 @@ const CONSTANTS = {
 	EXEC_METHODS: {
 		EXEC: 'exec',
 		EXEC_FILE: 'execFile',
+		EXIT: 'exit',
 	},
 	INTERVAL_PERIOD_DEFAULT_MS: 10000,
 	TOPIC_EXPANSION: {
@@ -132,6 +133,9 @@ function executeTopic(topic, inCommand, callback = executeTopicCallback) {
 			break;
 		case CONSTANTS.EXEC_METHODS.EXEC_FILE:
 			child_process.execFile(command.command, command.args, callback);
+			break;
+		case CONSTANTS.EXEC_METHODS.EXIT: // can be used as a restart if ran with a service wrapper. https://www.npmjs.com/package/node-windows#what-makes-node-windows-services-unique
+			process.exit(command.code);
 			break;
 		default:
 			logger.error(`Invalid exec method: ${command.method}`);
