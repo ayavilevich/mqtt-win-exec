@@ -183,14 +183,14 @@ mqttClient.on('connect', () => {
 		if (topicObject.runAtStart !== false) { // default is 'true'. set to 'false' to not run the command at start
 			// run right away
 			publishTopic(topic, topicObject.command, topicObject.mqttPublishOptions);
-			// setup interval
-			if (topicObject.intervalHandle) {
-				clearInterval(topicObject.intervalHandle);
-			}
-			topicObject.intervalHandle = setInterval(() => {
-				publishTopic(topic, topicObject.command, topicObject.mqttPublishOptions);
-			}, intervalPeriodToMs(topicObject.intervalPeriod));
 		}
+		// setup interval
+		if (topicObject.intervalHandle) {
+			clearInterval(topicObject.intervalHandle);
+		}
+		topicObject.intervalHandle = setInterval(() => {
+			publishTopic(topic, topicObject.command, topicObject.mqttPublishOptions);
+		}, intervalPeriodToMs(topicObject.intervalPeriod));
 	});
 });
 
