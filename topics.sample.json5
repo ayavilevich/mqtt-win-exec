@@ -27,7 +27,7 @@
 			method: 'exit',
 			code: 1,
 		},
-		'win/${HOSTNAME}/restart-some-service': 'powershell -command "Restart-Service SQLServer -Force"',
+		'win/${HOSTNAME}/restart_some_service': 'powershell -command "Restart-Service SQLServer -Force"',
 	},
 	publish: {
 		'win/${HOSTNAME}/dir': {
