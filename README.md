@@ -1,7 +1,7 @@
 # mqtt-win-exec
 An agent to execute commands in response to mqtt messages and publish result of command executions.
 
-One example of use would be in a home automation scenario. You can install this tool on a Windows or linux machine and then control it centrally from Home Assistant or a similar software. You would also require a MQTT broker.
+One example of use would be in a home automation scenario. You can install this tool on a Windows or linux machine and then control it centrally from Home Assistant or a similar software. You would also need a MQTT broker.
 
 This tool only executes pre-defined set of commands. This is by design due to security considerations.
 
@@ -12,9 +12,9 @@ This was developed with Windows in mind as linux machines have more options from
 Have git and the node runtime installed (https://nodejs.org/). If you prefer not to install git you can download the zip and expand it manually.
 
 ```
-git clone https://github.com/ayavilevich/mqtt-win-exec
-cd mqtt-win-exec
-npm i
+git clone https://github.com/ayavilevich/mqtt-win-exec  
+cd mqtt-win-exec  
+npm i  
 ```
 
 Create a `.env` based on `.env.sample`.  
@@ -31,6 +31,8 @@ node windows-service-install.js
 ```
 
 This will run the Windows 'net' command several times as an Administrator to add and configure the new service.
+
+If you don't see the service appearing in the Windows Services screen, run uninstall and then install again from a command prompt running "as administrator".
 
 ## TODO
 
