@@ -169,11 +169,6 @@ mqttClient.on('connect', () => {
 	const subTopics = Object.keys(topics.subscribe);
 	logger.info(`Subscribe to topics...: ${subTopics}`);
 	mqttClient.subscribe(subTopics);
-	// handle incoming messages
-	mqttClient.on('message', (topic, message) => {
-		logger.info(`incoming topic: ${topic}, payload: ${message.toString()}`);
-		executeTopic(topic, topics.subscribe[topic]);
-	});
 	// publish start topic
 	if (topics.startTopic) {
 		logger.info('publish', topics.startTopic.topic);
@@ -198,6 +193,13 @@ mqttClient.on('connect', () => {
 	});
 });
 
+// handle incoming messages
+mqttClient.on('message', (topic, message) => {
+	logger.info(`incoming topic: ${topic}, payload: ${message.toString()}`);
+	executeTopic(topic, topics.subscribe[topic]);
+});
+
+// handle connection events
 mqttClient.on('error', (error) => {
 	logger.error('MQTT error', error);
 });
