@@ -163,10 +163,15 @@ function publishTopic(topic, command, mqttPublishOptions) {
 	});
 }
 
+// debug https://stackoverflow.com/questions/9768444/possible-eventemitter-memory-leak-detected
+process.on('warning', (e) => console.warn(e.stack));
+
 // main logic
-mqttClient.on('connect', () => {
+mqttClient.on('connect', (connack) => {
 	// subscribe
 	const subTopics = Object.keys(topics.subscribe);
+	logger.info('Connection:');
+	logger.info(connack);
 	logger.info(`Subscribe to topics...: ${subTopics}`);
 	mqttClient.subscribe(subTopics);
 	// publish start topic
